@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Tables</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #111;
+      color: #eee;
+      padding: 2rem;
+    }
+    table {
+      border-collapse: collapse;
+      width: 50%;
+      margin-bottom: 2rem;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 0.5rem 1rem;
+      text-align: center;
+    }
+    h2 {
+      color: #0ff;
+    }
+  </style>
+</head>
+<body>
+  <!-- === Title and Section for Table 1 === -->
+  <h2>Table 1</h2>
+  <table id="table1">
+    <tr><th>Index #</th><th>Value</th></tr>
+    <!-- Rows inserted via JS -->
+  </table>
+
+  <!-- === Title and Section for Table 2 === -->
+  <h2>Table 2 (Computed)</h2>
+  <table id="table2">
+    <tr><th>Category</th><th>Value</th></tr>
+    <!-- Rows inserted via JS -->
+  </table>
+
+  <script>
+    // ===== RAW DATA (Table 1 Source) =====
+    // Key-value map where each "Ax" is an index and has an integer value
+    const table1Data = {
+      "A1": 41, "A2": 18, "A3": 21, "A4": 63, "A5": 2,
+      "A6": 71, "A7": 3, "A8": 53, "A9": 19, "A10": 90,
+      "A11": 30, "A12": 18, "A13": 15, "A14": 49, "A15": 50,
+      "A16": 74, "A17": 20, "A18": 60, "A19": 88, "A20": 28,
+      "A21": 97
+    };
+
+    // ===== RENDER TABLE 1 =====
+    // Populate table1 by looping over the dataset
+    const table1 = document.getElementById("table1");
+    for (const [index, value] of Object.entries(table1Data)) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${index}</td><td>${value}</td>`;
+      table1.appendChild(row);
+    }
+
+    // ===== CALCULATE TABLE 2 VALUES =====
+    // Table 2 categories and their computed formulas:
+    // Alpha   = A5 + A20
+    // Beta    = floor(A15 / A7)
+    // Charlie = A13 * A12
+    const table2Data = [
+      { category: "Alpha", value: table1Data["A5"] + table1Data["A20"] },
+      { category: "Beta", value: Math.floor(table1Data["A15"] / table1Data["A7"]) },
+      { category: "Charlie", value: table1Data["A13"] * table1Data["A12"] },
+    ];
+
+    // ===== RENDER TABLE 2 =====
+    // Dynamically populate rows with calculated results
+    const table2 = document.getElementById("table2");
+    for (const rowData of table2Data) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${rowData.category}</td><td>${rowData.value}</td>`;
+      table2.appendChild(row);
+    }
+  </script>
+</body>
+</html>
